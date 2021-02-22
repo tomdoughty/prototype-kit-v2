@@ -1,0 +1,38 @@
+{
+  "name": "prototype-kit-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "data": "node ./data",
+    "prestart": "gulp build",
+    "start": "nodemon app.js",
+    "watch": "gulp",
+    "lint": "eslint ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "babel-loader": "^8.2.2",
+    "body-parser": "^1.19.0",
+    "browser-sync": "^2.26.14",
+    "cookie-session": "^1.4.0",
+    "del": "^6.0.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.20.0",
+    "eslint-config-nhsuk": "^1.0.0",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "express-validator": "^6.9.2",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-sass": "^4.1.0",
+    "nhsuk-frontend": "^4.1.0",
+    "nunjucks": "^3.2.3",
+    "webpack-stream": "^6.1.2",
+    "xlsx": "^0.16.9"
+  }
+}
