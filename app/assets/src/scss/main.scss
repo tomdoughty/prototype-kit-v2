@@ -1,1 +1,9 @@
 @import './node_modules/nhsuk-frontend/packages/nhsuk';
+
+.app-results__list {
+  border-top: solid 1px $nhsuk-border-color;
+}
+
+.app-results__list-item {
+  border-bottom: solid 1px $nhsuk-border-color;
+}

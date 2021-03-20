@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "data": "node ./data",
-    "prestart": "gulp build",
+    "prestart": "gulp build && node ./lib/build-data.js",
     "start": "nodemon app.js",
     "watch": "gulp",
     "lint": "eslint ."
@@ -15,6 +14,7 @@
   "dependencies": {
     "@babel/core": "^7.12.17",
     "@babel/preset-env": "^7.12.17",
+    "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "body-parser": "^1.19.0",
     "browser-sync": "^2.26.14",
@@ -31,6 +31,7 @@
     "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^4.1.0",
     "nhsuk-frontend": "^4.1.0",
+    "node-postcodes.io": "^1.0.2",
     "nunjucks": "^3.2.3",
     "webpack-stream": "^6.1.2",
     "xlsx": "^0.16.9"

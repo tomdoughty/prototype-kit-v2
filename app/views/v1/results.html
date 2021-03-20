@@ -1,0 +1,39 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /views/layout.html -->
+{% extends 'layout.html' %}
+<!-- 
+  In /views/layout.html you can:
+    - change the header and footer 
+    - add custom CSS and JavaScript
+-->
+
+<!-- Set the page title inside the pageTitle block -->
+{% block pageTitle %}
+  NHS.UK prototype kit
+{% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% if results.length %}
+        <h1>Test centers near '{{ postcode }}'</h1>
+        <ul class="nhsuk-list app-results__list nhsuk-u-padding-top-5">
+          {% for result in results %}
+            <li class="app-results__list-item nhsuk-u-padding-bottom-5 nhsuk-u-margin-bottom-5">
+              <h2 class="nhsuk-u-padding-top-0">{{ result.name }}</h2>
+              <p class="nhsuk-u-margin-bottom-0">{{ result.fullAddress }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <h1>Sorry we found no results for '{{ postcode }}'</h1>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
