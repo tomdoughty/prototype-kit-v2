@@ -7,3 +7,8 @@
 .app-results__list-item {
   border-bottom: solid 1px $nhsuk-border-color;
 }
+
+// Fix for box-sizing pseudo elements in details component
+.nhsuk-checkboxes__input:checked+.nhsuk-checkboxes__label::after {
+  box-sizing: border-box;
+}
