@@ -1,0 +1,32 @@
+<details class="nhsuk-details">
+  <summary class="nhsuk-details__summary">
+    <span class="nhsuk-details__summary-text">
+      Filters
+    </span>
+  </summary>
+  <div class="nhsuk-details__text">
+    <form action="/v1/results" method="get">
+      <input type="hidden" name="postcode" value="{{ postcode }}" />
+      <div class="nhsuk-form-group">
+        <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+          <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+            Filter by available facilities
+          </legend>
+          <div class="nhsuk-checkboxes">
+            {% for filter in filters %}
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="{{ filter.value }}" name="{{ filter.value }}" type="checkbox" value="true" {{ 'checked' if filter.checked }}>
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="{{ filter.value }}">
+                  {{ filter.text }}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+      {{ button({
+        text: "Apply filters"
+      })}}
+    </form>
+  </div>
+</details>

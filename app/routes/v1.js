@@ -1,34 +1,36 @@
 const express = require('express');
-const postcodes = require('node-postcodes.io');
 
+const getFilters = require('../lib/getFilters');
 const getTestCentres = require('../lib/getTestCentres');
 const getTestCentre = require('../lib/getTestCentre');
 const mapResults = require('../lib/mapResults');
+const getLatLong = require('../lib/getLatLong');
 
 const router = express.Router();
 
 router.get('/testCentres', async (_, res) => res.json(await getTestCentres()));
 
 router.get('/results', async (req, res) => {
-  const { postcode } = req.query;
+  const { filters, checkedFilters } = getFilters(req);
+
+  const viewModel = {
+    checkedFilters,
+    filters,
+    postcode: req.query.postcode || '',
+    results: [],
+  };
 
   try {
-    const { result: { latitude, longitude } } = await postcodes.lookup(req.query.postcode);
-    const data = await getTestCentres();
-    const results = mapResults(data, latitude, longitude);
-
-    return res.render('v1/results', {
-      postcode,
-      results,
-    });
+    const { result: { latitude, longitude } } = await getLatLong(viewModel.postcode);
+    const rawTestCentres = await getTestCentres();
+    viewModel.results = mapResults(rawTestCentres, checkedFilters, latitude, longitude);
   } catch (error) {
     console.log(error);
-    // Return no results if anything fails
-    return res.render('v1/results', {
-      postcode: postcode || '',
-      results: [],
-    });
   }
+
+  return res.render('v1/results', {
+    ...viewModel,
+  });
 });
 
 router.get('/results/:id', async (req, res) => {

@@ -1,3 +1,19 @@
+const formatTime = (time) => time
+  .replace('00:00am', 'midnight')
+  .replace('12:00pm', 'midday')
+  .replace(':00', '')
+  .replace(/^0+/, '')
+  .replace(':', '.');
+
+const formatOpeningTimes = (times) => {
+  try {
+    const [open, closed] = times.split(' - ');
+    return `${formatTime(open)} to ${formatTime(closed)}`;
+  } catch (error) {
+    return times;
+  }
+};
+
 /* eslint-disable sort-keys */
 module.exports = (testCentre) => {
   const days = {
@@ -17,7 +33,7 @@ module.exports = (testCentre) => {
         text: value,
       },
       {
-        text: testCentre.hoursOfOperation[key],
+        text: formatOpeningTimes(testCentre.hoursOfOperation[key]),
       },
     ]));
 };

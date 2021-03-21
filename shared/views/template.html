@@ -104,13 +104,13 @@
     {% block bodyEnd %}{% endblock %}
 
     <script type="text/javascript">
-      document.querySelectorAll('.nhsuk-checkboxes__input').forEach((checkbox) => {
+      {# document.querySelectorAll('.nhsuk-checkboxes__input').forEach((checkbox) => {
         const hiddenInput = document.createElement('input');
         hiddenInput.type = "hidden";
         hiddenInput.name = checkbox.name;
         hiddenInput.value = "_unchecked";
         checkbox.parentNode.insertBefore(hiddenInput, checkbox);
-      });
+      }); #}
     </script>
 
   </body>
