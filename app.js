@@ -5,6 +5,7 @@ const basicAuth = require('express-basic-auth');
 const cookieSession = require('cookie-session');
 
 const nunjucks = require('./lib/nunjucks');
+const cacheProvider = require('./lib/cacheProvider');
 
 // Middleware
 const storeData = require('./middleware/store-data');
@@ -98,6 +99,10 @@ app.use((err, req, res, next) => {
   console.error(err.message);
   res.status(err.status || 500);
   return res.send(err.message);
+});
+
+cacheProvider.start((err) => {
+  if (err) console.error(err);
 });
 
 // Run the application

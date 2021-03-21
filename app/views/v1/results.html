@@ -27,7 +27,8 @@
           {% for result in results %}
             <li class="app-results__list-item nhsuk-u-padding-bottom-5 nhsuk-u-margin-bottom-5">
               <h2 class="nhsuk-u-padding-top-0">{{ result.name }}</h2>
-              <p class="nhsuk-u-margin-bottom-0">{{ result.fullAddress }}</p>
+              <p>{{ result.fullAddress }}</p>
+              <a href="/v1/results/{{ result.id }}">More details</a>
             </li>
           {% endfor %}
         </ul>

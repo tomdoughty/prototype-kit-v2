@@ -1,0 +1,84 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /views/layout.html -->
+{% extends 'layout.html' %}
+<!-- 
+  In /views/layout.html you can:
+    - change the header and footer 
+    - add custom CSS and JavaScript
+-->
+
+<!-- Set the page title inside the pageTitle block -->
+{% block pageTitle %}
+  NHS.UK prototype kit
+{% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <h1>{{ testCentre.name }}</h1>
+
+      <p class="nhsuk-lede-text">
+        {{ testCentre.additionalInfo }}
+      </p>
+
+      <div class="nhsuk-grid-row nhsuk-card-group">
+        <div class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+          <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+              <h2 class="nhsuk-card__heading nhsuk-heading-s">
+                Address
+              </h2>
+              <p class="nhsuk-card__description">
+                {{ testCentre.fullAddress | safe }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+          <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+              <h2 class="nhsuk-card__heading nhsuk-heading-s">
+                Facilities
+              </h2>
+              <ul>
+                {% for facility in testCentre.facilities %}
+                  <li>{{ facility }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if testCentre.siteBookingUrl %}
+        <h2>Book online</h2>
+        {{ actionLink({
+          "text": "Book a test online",
+          "href": testCentre.siteBookingUrl
+        }) }}
+      {% endif %}
+
+      <h2>Opening times</h2>
+      {{ table({
+        panel: false,
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Day"
+          },
+          {
+            text: "Opening hours"
+          }
+        ],
+        rows: testCentre.openingTimes
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}

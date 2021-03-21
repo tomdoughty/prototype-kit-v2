@@ -1,50 +1,44 @@
 const express = require('express');
-const axios = require('axios');
 const postcodes = require('node-postcodes.io');
+
+const getTestCentres = require('../lib/getTestCentres');
+const getTestCentre = require('../lib/getTestCentre');
+const mapResults = require('../lib/mapResults');
 
 const router = express.Router();
 
-const calculateDistance = require('../lib/calculateDistance');
-const dataUrls = require('../lib/dataUrls');
-const mapResults = require('../lib/mapResults');
-const savedData = require('../assets/src/data/data.json');
-
-router.get('/data', async (_, res) => {
-  const allData = await Promise.all(dataUrls.map(async (tileUrl) => {
-    const { data } = await axios(`https://maps.test-and-trace.nhs.uk/tileddata/${tileUrl}`);
-    return data.testCentres;
-  }));
-  return res.json(allData.flat());
-});
+router.get('/testCentres', async (_, res) => res.json(await getTestCentres()));
 
 router.get('/results', async (req, res) => {
   const { postcode } = req.query;
 
   try {
-    const { result } = await postcodes.lookup(req.query.postcode);
-
-    const results = savedData.map((tc) => ({
-      ...tc,
-      distance: calculateDistance(
-        tc.location.lat,
-        tc.location.lng,
-        result.latitude,
-        result.longitude
-      ),
-    }))
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, 25)
-      .map(mapResults);
+    const { result: { latitude, longitude } } = await postcodes.lookup(req.query.postcode);
+    const data = await getTestCentres();
+    const results = mapResults(data, latitude, longitude);
 
     return res.render('v1/results', {
       postcode,
       results,
     });
   } catch (error) {
+    console.log(error);
+    // Return no results if anything fails
     return res.render('v1/results', {
       postcode: postcode || '',
       results: [],
     });
+  }
+});
+
+router.get('/results/:id', async (req, res) => {
+  try {
+    const testCentre = await getTestCentre(req.params.id);
+    return res.render('v1/testCentre', {
+      testCentre,
+    });
+  } catch (error) {
+    return res.status(404);
   }
 });
 
