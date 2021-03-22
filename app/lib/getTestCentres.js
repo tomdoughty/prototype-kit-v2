@@ -15,9 +15,9 @@ module.exports = async () => {
     }));
 
     testCentres = allData
-      .flat()
-      // Horrible filter stolen from T&T
-      .filter((tc) => tc.enabled && tc.orgId !== 'AACV');
+      .flat();
+    // Horrible standard filter stolen from T&T
+    // .filter((tc) => tc.enabled && tc.orgId !== 'AACV');
 
     cache.set('testCentres', testCentres, 300);
   }
