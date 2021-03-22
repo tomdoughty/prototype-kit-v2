@@ -8,7 +8,7 @@ module.exports = async () => {
   let testCentres = cache.get('testCentres');
 
   if (!testCentres) {
-    console.log('no cache!');
+    // Horrible requests stolen from T&T
     const allData = await Promise.all(dataUrls.map(async (tileUrl) => {
       const { data } = await axios(`https://maps.test-and-trace.nhs.uk/tileddata/${tileUrl}`);
       return data.testCentres;
