@@ -8,6 +8,8 @@ import Checkboxes from 'nhsuk-frontend/packages/components/checkboxes/checkboxes
 // Polyfills
 import 'nhsuk-frontend/packages/polyfills';
 
+import map from './map';
+
 // Initialize components
 document.addEventListener('DOMContentLoaded', () => {
   Details();
@@ -15,4 +17,5 @@ document.addEventListener('DOMContentLoaded', () => {
   SkipLink();
   Radios();
   Checkboxes();
+  map();
 });

@@ -13,9 +13,11 @@ router.get('/testCentres', async (_, res) => res.json(await getTestCentres()));
 router.get('/results', async (req, res) => {
   const { filters, checkedFilters } = getFilters(req);
 
-  const viewModel = {
+  let viewModel = {
     checkedFilters,
     filters,
+    latitude: 0,
+    longitude: 0,
     postcode: req.query.postcode || '',
     results: [],
   };
@@ -23,7 +25,16 @@ router.get('/results', async (req, res) => {
   try {
     const { result: { latitude, longitude } } = await getLatLong(viewModel.postcode);
     const rawTestCentres = await getTestCentres();
-    viewModel.results = mapResults(rawTestCentres, checkedFilters, latitude, longitude);
+    const results = mapResults(rawTestCentres, checkedFilters, latitude, longitude);
+    const resultsCoordinates = results.map(({ location: { lng, lat } }) => [lng, lat]);
+
+    viewModel = {
+      ...viewModel,
+      latitude,
+      longitude,
+      results,
+      resultsCoordinates,
+    };
   } catch (error) {
     console.log(error);
   }

@@ -19,21 +19,32 @@
 {% endblock %}
 
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-two-thirds">
-      {% if results.length %}
+  {% if results.length %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
         <h1>Test centers near '{{ postcode }}'</h1>
-        {% include "v1/includes/filters.html" %}
-        <ul class="nhsuk-list app-results__list nhsuk-u-padding-top-5">
+      </div>
+    </div>
+    {% include "v1/includes/filters.html" %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-half">
+        <ul class="nhsuk-list app-results__list nhsuk-u-padding-top-3">
           {% for result in results %}
-            <li class="app-results__list-item nhsuk-u-padding-bottom-5 nhsuk-u-margin-bottom-5">
-              <h2 class="nhsuk-u-padding-top-0">{{ result.name }}</h2>
-              <p>{{ result.fullAddress }}</p>
+            <li class="app-results__list-item nhsuk-u-padding-bottom-4 nhsuk-u-margin-bottom-4">
+              <h2 class="nhsuk-u-padding-top-0 nhsuk-u-margin-bottom-2">{{ result.name }}</h2>
+              <p class="nhsuk-u-margin-bottom-2">{{ result.fullAddress }}</p>
               <a href="/v1/results/{{ result.id }}">More details<span class="nhsuk-u-visually-hidden"> about {{ result.name }}</span></a>
             </li>
           {% endfor %}
         </ul>
-      {% else %}
+      </div>
+      <div class="nhsuk-grid-column-one-half">
+        <div id="map" class="map" tabindex="0"></div>
+      </div>
+    </div>
+  {% else %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
         <h1>Sorry we found no results for '{{ postcode }}'</h1>
         <p>If the place you searched for is in England, you could:</p>
         <ul>
@@ -41,7 +52,14 @@
           <li>try a different place name</li>
         </ul>
         <p><a href="/v1">Back to find a test centre</a></p>
-      {% endif %}
+      </div>
     </div>
-  </div>
+  {% endif %}
+
+  <script>
+    window.NHSUK_SETTINGS = {};
+    window.NHSUK_SETTINGS.USER_LATITUDE = {{ latitude }};
+    window.NHSUK_SETTINGS.USER_LONGITUDE = {{ longitude }};
+    window.NHSUK_SETTINGS.TEST_CENTRE_COORDINATES = {{ resultsCoordinates | dump }}
+  </script>
 {% endblock %}

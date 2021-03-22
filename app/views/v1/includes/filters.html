@@ -14,7 +14,7 @@
           </legend>
           <div class="nhsuk-checkboxes">
             {% for filter in filters %}
-              <div class="nhsuk-checkboxes__item">
+              <div class="nhsuk-checkboxes__item nhsuk-grid-column-one-third app-filters__checkboxes">
                 <input class="nhsuk-checkboxes__input" id="{{ filter.value }}" name="{{ filter.value }}" type="checkbox" value="true" {{ 'checked' if filter.checked }}>
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="{{ filter.value }}">
                   {{ filter.text }}
@@ -25,7 +25,8 @@
         </fieldset>
       </div>
       {{ button({
-        text: "Apply filters"
+        text: "Apply filters",
+        classes: "nhsuk-u-margin-bottom-0"
       })}}
     </form>
   </div>
