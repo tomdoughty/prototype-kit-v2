@@ -16,7 +16,7 @@
     </div>
     {% include "v1/includes/filters.html" %}
     <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-one-half">
+      <div class="nhsuk-grid-column-two-thirds">
         <ul class="nhsuk-list app-results__list nhsuk-u-padding-top-3">
           {% for result in results %}
             <li class="app-results__list-item nhsuk-u-padding-bottom-4 nhsuk-u-margin-bottom-4">
@@ -27,9 +27,9 @@
           {% endfor %}
         </ul>
       </div>
-      <div class="nhsuk-grid-column-one-half">
+      {# <div class="nhsuk-grid-column-one-half">
         <div id="map" class="map" tabindex="0"></div>
-      </div>
+      </div> #}
     </div>
   {% else %}
     <div class="nhsuk-grid-row">
